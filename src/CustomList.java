@@ -1,5 +1,27 @@
-public class CustomList<T>
+import java.util.AbstractList;
+
+public class CustomList<T> extends AbstractList<T>
 {
+    @Override
+    public T get(int index) {
+        if (index < 0 || index >= size)
+            return null;
+        Node<T> current = head;
+        for(int i = 0; i < index; i++)
+        {
+        current = current.next;
+        }
+        if (current !=null)
+            return current.value;
+        else
+            return null;
+    }
+
+    @Override
+    public int size() {
+        return size;
+    }
+
     private static class Node<T>
     {
         T value;
@@ -42,20 +64,51 @@ public class CustomList<T>
     }
     public T getFirst()
     {
-        return null;
+        if (size==0)
+            return null;
+        return head.value;
     }
     public T getLast()
     {
-        return null;
+        if (size==0)
+            return null;
+        return tail.value;
     }
     public T removeLast()
     {
-        return null;
+        if (size==0)
+            return null;
+        T deletedValue = tail.value;
+        if (size==1) {
+            head = tail = null;
+            size--;
+            return deletedValue;
+        }
+        Node<T> current = head;
+        while(current.next != tail)
+        {
+            current = current.next;
+        }
+        tail = current;
+        tail.next =null;
+        size--;
+        return deletedValue;
     }
     public T removeFirst()
     {
-        return null;
+        if (size==0)
+            return null;
+        T value = head.value;
+        if (size==1) {
+            head = tail = null;
+            size--;
+            return value;
+        }
+        head = head.next;
+        size--;
+        return value;
     }
 
 
 }
+
